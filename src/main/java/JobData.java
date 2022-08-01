@@ -5,6 +5,7 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -94,17 +95,13 @@ public class JobData {
     public static ArrayList<HashMap<String, String>> findByValue(String value) {
         // load data, if not already loaded
         loadData();
-
-        List<HashMap<String, String>> uniqueResults = new ArrayList<>();
-        allJobs.stream().forEach((HashMap<String, String> job) -> {
-            List<Map.Entry<String, String>> matchingColumns = job.entrySet().stream()
-                    .filter(column ->
+        return new ArrayList<>(
+            allJobs.stream().filter((HashMap<String, String> job) -> {
+                return job.entrySet().stream().filter(column ->
                             column.getValue().toLowerCase().contains(value.toLowerCase())
-                    ).collect(Collectors.toList());
-            Boolean wasFound = matchingColumns.size() > 0;
-            if(wasFound){ uniqueResults.add(job); }
-        });
-        return new ArrayList<>(uniqueResults);
+                    ).collect(Collectors.toList()).size() > 0;
+            }).collect(Collectors.toList())
+        );
     }
 
 //    public static ArrayList<HashMap<String, String>> findByValue(String value) {
