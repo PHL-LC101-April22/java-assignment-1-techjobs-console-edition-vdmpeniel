@@ -96,11 +96,11 @@ public class JobData {
         // load data, if not already loaded
         loadData();
         return new ArrayList<>(
-            allJobs.stream().filter((HashMap<String, String> job) -> {
-                return job.entrySet().stream().filter(column ->
-                            column.getValue().toLowerCase().contains(value.toLowerCase())
-                    ).collect(Collectors.toList()).size() > 0;
-            }).collect(Collectors.toList())
+            allJobs.stream().filter((HashMap<String, String> job) ->
+                job.entrySet().stream().filter(column ->
+                    column.getValue().toLowerCase().contains(value.toLowerCase())
+                ).collect(Collectors.toList()).size() > 0
+            ).collect(Collectors.toList())
         );
     }
 
