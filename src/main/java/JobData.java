@@ -97,26 +97,11 @@ public class JobData {
         loadData();
         return new ArrayList<>(
             allJobs.stream().filter((HashMap<String, String> job) ->
-                job.entrySet().stream().filter(column ->
-                    column.getValue().toLowerCase().contains(value.toLowerCase())
-                ).collect(Collectors.toList()).size() > 0
+                job.entrySet().stream().filter(column -> column.getValue().toLowerCase().contains(value.toLowerCase()))
+                .collect(Collectors.toList()).size() > 0
             ).collect(Collectors.toList())
         );
     }
-
-//    public static ArrayList<HashMap<String, String>> findByValue(String value) {
-//        return allJobs.stream().filter((HashMap<String, String> job) -> {
-//            return job.entrySet()
-//                .stream()
-//                .filter((Map.Entry<String, String> column) -> {
-//                    final boolean equals = column.getValue()
-//                            .equals(value);
-//                    return equals;
-//                })
-//                .collect(Collectors.toList())
-//                .size() >= 1;
-//        }).collect(Collectors.toList());
-//  }
 
     /**
      * Read in data from a CSV file and store it in a list
