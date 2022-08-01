@@ -42,6 +42,7 @@ public class TechJobsTest {
         String input = "0\n2\nBuzzbold\nx";
         String output = runProgramWithInput(input);
         String expected = getFileContents("src/test/resources/testPrintJobs.txt");
+        String test = "------->Testing:" + expected.equals(output);
         assertEquals(expected, output);
     }
 
