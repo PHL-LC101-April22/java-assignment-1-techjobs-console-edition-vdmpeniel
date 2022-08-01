@@ -5,10 +5,8 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by LaunchCode
@@ -94,13 +92,34 @@ public class JobData {
      * @return      List of all jobs with at least one field containing the value
      */
     public static ArrayList<HashMap<String, String>> findByValue(String value) {
-
         // load data, if not already loaded
         loadData();
 
-        // TODO - implement this method
-        return null;
+        List<HashMap<String, String>> uniqueResults = new ArrayList<>();
+        allJobs.stream().forEach((HashMap<String, String> job) -> {
+            List<Map.Entry<String, String>> matchingColumns = job.entrySet().stream()
+                    .filter(column ->
+                            column.getValue().toLowerCase().contains(value.toLowerCase())
+                    ).collect(Collectors.toList());
+            Boolean wasFound = matchingColumns.size() > 0;
+            if(wasFound){ uniqueResults.add(job); }
+        });
+        return new ArrayList<>(uniqueResults);
     }
+
+//    public static ArrayList<HashMap<String, String>> findByValue(String value) {
+//        return allJobs.stream().filter((HashMap<String, String> job) -> {
+//            return job.entrySet()
+//                .stream()
+//                .filter((Map.Entry<String, String> column) -> {
+//                    final boolean equals = column.getValue()
+//                            .equals(value);
+//                    return equals;
+//                })
+//                .collect(Collectors.toList())
+//                .size() >= 1;
+//        }).collect(Collectors.toList());
+//  }
 
     /**
      * Read in data from a CSV file and store it in a list
